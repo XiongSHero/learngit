@@ -80,7 +80,7 @@ class App extends Component {
                 <Layout style={{height:"90%"}}>
                     {!responsive.data.isMobile && side_view}
                     <Layout style={{ backgroundColor: '#fff'}}>
-                        <Content style={{ margin: '0 10px', overflow: 'initial',height:'100%' }}>
+                        <Content style={{ margin: '0 10px', overflow: 'initial',height:'100%',background: '#f1f1f1' }}>
                             {this.props.children}
                         </Content>
 

@@ -36,6 +36,8 @@ class PrivateGo extends React.Component {
         let d = new Date();
         this.state = {
             gettabledata:[],
+            xzhou: [],
+            gettableflag:true,
             echartsFlag: false,
             first: false,
             expand: false,
@@ -73,10 +75,21 @@ class PrivateGo extends React.Component {
     componentWillReceiveProps(nextProps) {
         const {auth: nextAuth = {}} = nextProps;
         if(nextAuth.data && nextAuth.data.code === 0){
-            console.log(nextAuth.data.dataValue);
             this.setState({
                 gettabledata: nextAuth.data.dataValue
             })
+            const echartData = nextAuth.data.dataValue;
+            let x;
+            echartData.forEach((item) => {
+                 for(x in item) {
+                     if (x === 'date') {
+                         this.setState({
+                             xzhou: this.state.xzhou.push(item[x])
+                         })
+                     }
+                 }
+            });
+            console.log(this.state.xzhou)
         }
     }
 
@@ -128,6 +141,13 @@ class PrivateGo extends React.Component {
         let echarCom = new EcharCom();
 
         let datalist = [];
+        // if(this.state.gettableflag){
+        //     this.state.gettableflag = false;
+        //     setTimeout(() => this.setState({gettabledata: this.state.gettabledata}));
+        //     console.log(this.state.gettabledata)
+        // }
+        // const tabledata = this.props.gettabledata;
+        console.log(Array.isArray(this.state.xzhou) );
         let xlist = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
         let legend = ["高风险", "中风险", "低风险"];
 
@@ -143,12 +163,12 @@ class PrivateGo extends React.Component {
         return (
             <div className="gutter-example button-demo " style={{ height: '100%', background:'#f1f1f1'}}>
                 <BreadcrumbCustom first="因私出国(境)" indexName="综合事务管理"/>
-                <Row gutter={10} className=" scrollable-container " style={{ height: '95%' }}>
+                <Row gutter={10} className=" scrollable-container " style={{ height: '100%' ,background: '#f1f1f1' }}>
                     <Col className="gutter-row" md={24}
                          style={{ padding: '0px', backgroundColor: '#fff' }}>
                         <div style={{ height: '100%',background: '#f1f1f1' }}>
-                            <div style={{ padding: '5px 10px' }}>
-                                <Layout style={{ background: "#fff" }}>
+                            <div style={{ padding: '5px 10px', background: '#f1f1f1'  }}>
+                                <Layout style={{ background: '#f1f1f1'  }}>
                                     <div className="y-center justify-content">
                                         <div className="text-center" style={{ flex: "0.8" }}>
                                             <div className="pull-left " style={{ fontSize: "14px" }}>
@@ -181,7 +201,7 @@ class PrivateGo extends React.Component {
                     <Col className="gutter-row" md={24}
                          style={{
                              height: '44%',
-                             backgroundColor: "#fff",
+                             backgroundColor: "#f1f1f1",
                              borderTop: "1px solid #E9E9E9"
                          }}>
                         <div className="" style={{ width: "30%", height: '100%', float: "left" }}>
@@ -189,7 +209,7 @@ class PrivateGo extends React.Component {
                                 <div style={{
                                     height: '14%',
                                     width: '100%',
-                                    paddingLeft: '5px',
+                                    marginLeft: '5px',
                                     position: 'relative'
                                 }}>
                                     <div style={{ fontSize: "14px" }}>

@@ -97,8 +97,8 @@ class BreadcrumbCustom extends React.Component {
 
         const {indexName} = this.props || "首页";
         return (
-            <div style={{ width:'100%' }}>
-                <Breadcrumb separator=">" className="pull-left" style={{ margin: '3px 0' }}>
+            <div style={{overflow: 'hidden', paddingLef: '10px', paddingRight: '4px', marginRight: '-5px', marginLeft: '-5px', background: '#f1f1f1'}}>
+                <Breadcrumb separator=">" className="pull-left" style={{ margin: '3px 0', paddingLeft: '10px'}}>
                     <Breadcrumb.Item><Icon type="mobile"/><span style={{ margin: '0px 12px' }}
                                                                 className="nav-text">{indexName}</span></Breadcrumb.Item>
                     {first}
