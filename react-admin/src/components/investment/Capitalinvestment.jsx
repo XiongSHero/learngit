@@ -33,6 +33,7 @@ class Capitalinvestment extends React.Component {
         super(props);
         let d = new Date();
         this.state = {
+            gettabledata: [],
             echartsFlag: false,
             first: false,
             expand: false,
@@ -48,11 +49,11 @@ class Capitalinvestment extends React.Component {
     componentWillMount() {
         const { receiveData } = this.props;
         receiveData(null, 'auth');
-        console.log("auth +++++" + JSON.stringify(this.props.auth));
+        // console.log("auth +++++" + JSON.stringify(this.props.auth));
 
         const { fetchData } = this.props;
         //调用 http请求 获取网络数据
-        //fetchData({funcName: 'admin', stateName: 'auth'});
+        fetchData({funcName: 'tableData', stateName: 'auth'});
     }
 
     componentDidMount() {
@@ -66,7 +67,12 @@ class Capitalinvestment extends React.Component {
 
     //获取网络数据 渲染UI
     componentWillReceiveProps(nextProps) {
-
+        const {auth: nextAuth = {}} = nextProps;
+        if(nextAuth.data && nextAuth.data.code === 0){
+            this.setState({
+                gettabledata: nextAuth.data.dataValue
+            })
+        }
     }
     funBack1 = () => {
         this.showMoreModal();
@@ -154,7 +160,7 @@ class Capitalinvestment extends React.Component {
 
                     <Col className="gutter-row" md={24}
                          style={{
-                             height: '44%',
+                             height: '50%',
                              backgroundColor: "#fff",
                              borderTop: "1px solid #E9E9E9"
                          }}>
@@ -180,7 +186,7 @@ class Capitalinvestment extends React.Component {
                         </div>
                         <div className="" style={{ width: "70%",  float: "left" }}>
                             <Card bordered={false} noHovering={true} style={{ height: '100%' }}>
-                                <ExtBaseicTableList
+                                <ExtBaseicTableList gettabledata={this.state.gettabledata}
                                     func1={this.funBack1}
                                     func2={this.funBack2}/>
                             </Card>

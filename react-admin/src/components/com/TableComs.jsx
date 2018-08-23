@@ -378,8 +378,7 @@ class TableComs {
             data: this.readyIssue_data(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         };
     };
 
@@ -391,7 +390,7 @@ class TableComs {
             bordered: true,
             pagination: false,
             style: { padding: '0 10px' },
-            scroll: { y: 210 }
+            scroll: { y: 300 }
         };
     };
 
@@ -403,7 +402,7 @@ class TableComs {
             bordered: true,
             pagination: false,
             style: { padding: '0 10px' },
-            scroll: { y: 210 }
+            scroll: { y: 300 }
         };
 
     };
@@ -416,7 +415,7 @@ class TableComs {
             bordered: true,
             pagination: false,
             style: { padding: '0 10px' },
-            scroll: { y: 210 }
+            scroll: { y: 300 }
         };
 
     };
@@ -741,8 +740,7 @@ class TableComs {
             data: this.seal_manger_made_data(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         };
     };
 
@@ -752,8 +750,7 @@ class TableComs {
             data: this.seal_manger_use_data(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -764,8 +761,7 @@ class TableComs {
             data: this.seal_manger_des_data(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         };
     };
 
@@ -776,8 +772,7 @@ class TableComs {
             data: this.car_equipment_manger_data(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -788,8 +783,7 @@ class TableComs {
             data: this.car_dispatch_manger_data(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -800,8 +794,7 @@ class TableComs {
             data: this.car_repair_manger_data(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -812,8 +805,7 @@ class TableComs {
             data: this.car_charge_manger_data(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -825,8 +817,7 @@ class TableComs {
             data: this.reception_manger_data(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -838,8 +829,7 @@ class TableComs {
             data: this.private_manger_data(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -850,8 +840,7 @@ class TableComs {
             data: this.public_manger_data(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -896,8 +885,7 @@ class TableComs {
             data: this.hrm_motion(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
     };
 
@@ -979,8 +967,7 @@ class TableComs {
             data: this.hrm_democracy_recommendation(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
     };
 
@@ -1099,8 +1086,7 @@ class TableComs {
             data: this.hrm_inspect(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -1195,8 +1181,7 @@ class TableComs {
             data: this.hrm_discussion_and_decision(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -1254,8 +1239,7 @@ class TableComs {
             data: this.hrm_in_office(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -1373,8 +1357,7 @@ class TableComs {
             data: this.hrm_recruitment(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -1423,8 +1406,7 @@ class TableComs {
             data: this.hrm_salary_and_welfare(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
     };
 
@@ -1503,8 +1485,7 @@ class TableComs {
             data: this.hrm_other(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -1580,8 +1561,7 @@ class TableComs {
             data: this.finance_budget_expenditure_management(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -1676,8 +1656,7 @@ class TableComs {
             data: this.finance_cash_management(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -1772,8 +1751,7 @@ class TableComs {
             data: this.finance_bank_account_management(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -1815,8 +1793,7 @@ class TableComs {
             data: this.finance_bill_management(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -1895,8 +1872,7 @@ class TableComs {
             data: this.finance_debt_management(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
     };
 
@@ -1907,8 +1883,7 @@ class TableComs {
             data: [],
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
     };
 
@@ -1981,8 +1956,7 @@ class TableComs {
             data: this.finance_bex_management(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
     };
 
@@ -2123,8 +2097,7 @@ class TableComs {
             data: this.funds_project_collection(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -2163,8 +2136,7 @@ class TableComs {
             data: this.project_collection(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -2225,8 +2197,7 @@ class TableComs {
             data: this.project_any(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -2263,8 +2234,7 @@ class TableComs {
             data: this.project_sun(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -2297,8 +2267,7 @@ class TableComs {
             data: this.project_do(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -2499,8 +2468,7 @@ class TableComs {
             data: this.project_quality_control(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -2560,8 +2528,7 @@ class TableComs {
             data: this.project_progress_control(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
     };
     project_investment_control = (expand) => [{
@@ -2655,8 +2622,7 @@ class TableComs {
             data: this.project_investment_control(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -2752,8 +2718,7 @@ class TableComs {
             data: this.project_safety_control(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -2851,8 +2816,7 @@ class TableComs {
             data: this.project_business_management(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -2922,8 +2886,7 @@ class TableComs {
             data: this.project_water_dispatch_management(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -2959,8 +2922,7 @@ class TableComs {
             data: this.project_water_monitoring(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -3008,8 +2970,7 @@ class TableComs {
             data: this.project_maintenance(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -3061,8 +3022,7 @@ class TableComs {
             data: this.project_safety_production_monitor(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
     };
 
@@ -3128,8 +3088,7 @@ class TableComs {
             data: this.safety_accident_investigation(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -3407,8 +3366,7 @@ class TableComs {
             data: this.tendering_and_bidding(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -3443,8 +3401,7 @@ class TableComs {
             data: this.project_setting(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -3502,8 +3459,7 @@ class TableComs {
             data: this.contract_formation(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -3587,8 +3543,7 @@ class TableComs {
             data: this.contract_fulfilment(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
     };
 
@@ -3626,8 +3581,7 @@ class TableComs {
             data: this.asset_allocation(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -3747,8 +3701,7 @@ class TableComs {
             data: this.asset_use1(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
 
     };
@@ -3823,8 +3776,7 @@ class TableComs {
             data: this.assets_disposal1(expan),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
     };
 
@@ -3997,8 +3949,7 @@ class TableComs {
             data: this.complaint_reporting_handling(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
     };
 
@@ -4106,8 +4057,7 @@ class TableComs {
             data: this.internal_audit_monitoring(expand),
             bordered: true,
             pagination: false,
-            style: { padding: '0 10px' },
-            scroll: { y: 210 }
+           style: { padding: '0 10px' },             scroll: { y: 300 }
         }
     };
 

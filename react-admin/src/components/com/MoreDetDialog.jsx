@@ -24,8 +24,28 @@ class MoreDetDialog extends React.Component {
                 visible: true
             });
         }
+       // console.log(nextProps.gettabledata);
+       //  const detail =nextProps.gettabledata;
+       //  detail.forEach((item) => {
+       //
+       //  })
     }
 
+   /* getDetail = () => {
+        const detail =this.props.gettabledata;
+        let x,desDetail = [];
+         detail.forEach((item, i) => {
+            for(x in item) {
+                if(x === 'key' && item[x] !== i){
+                    return;
+                }
+                if(x === 'description'){
+                    desDetail = item[x];
+                }
+            }
+         })
+        return desDetail;
+    }*/
     handleCancel = () => {
         this.setState({ visible: false });
     };
@@ -82,6 +102,61 @@ class MoreDetDialog extends React.Component {
             </Timeline.Item>
         </Timeline>
     };
+    getTimeLine3 = () => {
+        let tableComs = new TableComs();
+        // const descrs = this.getDetail();
+
+        const descrs =[{
+            date: '2018-8-16',
+            event: '申请公车去机场接xxx来我院观察，批准人：李四',
+            person: '刘德华'
+        },
+            {
+                date: '2018-8-17',
+                resultRisk: 2,
+                reason: '批准人李四无公车批复权限',
+                person: '评估系统'
+            },
+            {
+                date: '2018-8-18',
+                resultRisk: 0,
+                reason: '张三因病假，授权李四暂时接替',
+                person: '张三'
+            },
+            {
+                date: '2018-8-19',
+                resultRisk: 1,
+                reason: '因病请假，代理批复',
+                person: '评估系统'
+            }
+        ];
+        const descripe = descrs.slice(1);
+        const itemList = descripe.map((descr, index) =>
+            <Timeline.Item color="green" key={index}>
+                <div>
+                    <Card title={descr.date} bordered={true}>
+                        <p style={{ paddingLeft: '10px'}}>评估结果：{descr.resultRisk ? tableComs.getStar(descr.resultRisk, 'star') : '无风险'}</p>
+                        <p style={{ paddingLeft: '10px'}}>原因：{descr.reason}</p>
+                        <p style={{ float: 'right'}}>操作人：{descr.person}</p>
+                    </Card>
+                </div>
+            </Timeline.Item>
+        );
+        const first = descrs.splice(0,1);
+        return (
+            <Timeline>
+                <Timeline.Item color="red">
+                    <div>
+                        <Card title={first[0].date} bordered={true}>
+                            <p style={{ paddingLeft: '10px' }}>{first[0].event}</p>
+                            <p style={{ float: 'right' }}>责任人 : {first[0].person}</p>
+                        </Card>
+                    </div>
+                </Timeline.Item>
+                {itemList}
+            </Timeline>
+        )
+    }
 
     getTimeLine1 = () => {
         let tableComs = new TableComs();
@@ -203,7 +278,7 @@ class MoreDetDialog extends React.Component {
     render() {
         const { title } = this.props;
         let visible = this.state.visible;
-        let timeView = this.getTimeLine2();
+        let timeView = this.getTimeLine3();
 
         return (
             visible ?

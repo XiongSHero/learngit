@@ -107,7 +107,7 @@ class BaseSideCustom extends Component {
                 trigger={null}
                 breakpoint="lg"
                 collapsed={this.props.collapsed}
-                style={{overflowY: 'auto',background:"#f1f1f1"}}
+                style={{overflowY: 'auto',background:"#fff"}}
             >
                 {/*<div className="logo"/>*/}
 

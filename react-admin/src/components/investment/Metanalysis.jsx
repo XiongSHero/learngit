@@ -32,6 +32,7 @@ class Metanalysis extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            gettabledata: [],
             echartsFlag: false,
             first: false,
             expand: false,
@@ -45,7 +46,7 @@ class Metanalysis extends React.Component {
 
         const { fetchData } = this.props;
         //调用 http请求 获取网络数据
-        //fetchData({funcName: 'admin', stateName: 'auth'});
+        fetchData({funcName: 'tableData', stateName: 'auth'});
     }
 
     componentDidMount() {
@@ -59,7 +60,12 @@ class Metanalysis extends React.Component {
 
     //获取网络数据 渲染UI
     componentWillReceiveProps(nextProps) {
-
+        const {auth: nextAuth = {}} = nextProps;
+        if(nextAuth.data && nextAuth.data.code === 0){
+            this.setState({
+                gettabledata: nextAuth.data.dataValue
+            })
+        }
     }
     funBack1 = () => {
         this.showMoreModal();
@@ -108,7 +114,7 @@ class Metanalysis extends React.Component {
         let ecahrs = !first ? "" : <BaseEcharView option={echarCom.option} legend={legend} xAxis={xlist} data={datalist}
                                                   style={{ height: '82%', width: '100%' }}/>;
         return (
-            <div className="gutter-example button-demo " style={{ height: '100%' }}>
+            <div className="gutter-example button-demo " style={{ height: '100%', background: '#f1f1f1' }}>
                 <BreadcrumbCustom  first="项目汇总分析" indexName="自有资金投资管理"/>
                 <Row gutter={10} className=" scrollable-container " style={{ height: '95%' }}>
                     <Col className="gutter-row" md={24}
@@ -139,7 +145,7 @@ class Metanalysis extends React.Component {
                                     </div>
                                 </Layout>
                             </div>
-                            <div style={{ height: '320px',overflowX:'hidden' }}>
+                            <div style={{ height: '350px',overflowX:'hidden' }}>
                                 <ExtBaseicTable {...(tableComs.project_any_manger(expand))} />
                             </div>
                         </div>
@@ -147,13 +153,14 @@ class Metanalysis extends React.Component {
 
                     <Col className="gutter-row" md={24}
                          style={{
-                             height: '44%',
+                             height: '50%',
                              backgroundColor: "#fff",
-                             borderTop: "1px solid #E9E9E9"
+                             marginTop: '10px',
+                             overflow: 'hidden'
                          }}>
-                        <div className="" style={{ width: "30%", height: '100%', float: "left" }}>
-                            <div style={{ position: 'relative', height: '100%' }}>
-                                <div style={{
+                        <div className="" style={{ width: "40%", height: '100%', float: "left", background: '#f1f1f1' }}>
+                            <div style={{ position: 'relative', height: '100%', padding: '15px 0 0 15px', background: '#fff'}}>
+                               {/* <div style={{
                                     height: '14%',
                                     width: '100%',
                                     paddingLeft: '5px',
@@ -164,16 +171,16 @@ class Metanalysis extends React.Component {
                                         <span style={{ fontSize: "13px" }}>风险监控统计</span>
                                     </div>
 
-                                </div>
+                                </div>*/}
 
 
                                 {ecahrs}
 
                             </div>
                         </div>
-                        <div className="" style={{ width: "70%",  float: "left" }}>
+                        <div className="" style={{ width: "60%",  float: "left" }}>
                             <Card bordered={false} noHovering={true} style={{ height: '100%' }}>
-                                <ExtBaseicTableList
+                                <ExtBaseicTableList gettabledata={this.state.gettabledata}
                                     func1={this.funBack1}
                                     func2={this.funBack2}/>
                             </Card>

@@ -6,6 +6,7 @@
  *
  */
 import React from "react";
+// import Echart from "../charts/echart";
 import EcharCom from "../com/EcharCom";
 import EcharBar from "../com/EcharBar";
 import Bacecomstyle from "../Bacecomstyle";
@@ -75,21 +76,9 @@ class PrivateGo extends React.Component {
     componentWillReceiveProps(nextProps) {
         const {auth: nextAuth = {}} = nextProps;
         if(nextAuth.data && nextAuth.data.code === 0){
-            this.setState({
+                this.setState({
                 gettabledata: nextAuth.data.dataValue
             })
-            const echartData = nextAuth.data.dataValue;
-            let x;
-            echartData.forEach((item) => {
-                 for(x in item) {
-                     if (x === 'date') {
-                         this.setState({
-                             xzhou: this.state.xzhou.push(item[x])
-                         })
-                     }
-                 }
-            });
-            console.log(this.state.xzhou)
         }
     }
 
@@ -112,7 +101,9 @@ class PrivateGo extends React.Component {
         });
     };
 
-    handleChange = () => {
+    handleChange = (v) => {
+        //  url参数（2个输入框中的值）
+        console.log(v);
         const url = 'https://www.easy-mock.com/mock/5b74ea085ec4891242bc658a/table/timetable';
         axios({
             method: 'get',
@@ -129,6 +120,29 @@ class PrivateGo extends React.Component {
         })
     };
 
+    diffDate = (arr) => {
+        let i, obj = {}, result = [], len = arr.length;
+        for(i = 0; i < len; i++){
+            if(!obj[arr[i]]){
+                obj[arr[i]] = true;
+                result.push(arr[i]);
+            }
+        }
+        return result;
+
+    }
+    getechartdata = () => {
+        const echartdata = this.state.gettabledata;
+        let x, xzhou = [];
+        echartdata.forEach((item) => {
+            for(x in item) {
+                if (x === 'date') {
+                    xzhou.push(item[x])
+                }
+            }
+        });
+        return this.diffDate(xzhou);
+    }
     handleButton = () => {
         let state = this.state.expand || false;
         this.setState({
@@ -141,14 +155,8 @@ class PrivateGo extends React.Component {
         let echarCom = new EcharCom();
 
         let datalist = [];
-        // if(this.state.gettableflag){
-        //     this.state.gettableflag = false;
-        //     setTimeout(() => this.setState({gettabledata: this.state.gettabledata}));
-        //     console.log(this.state.gettabledata)
-        // }
-        // const tabledata = this.props.gettabledata;
-        console.log(Array.isArray(this.state.xzhou) );
-        let xlist = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
+        // console.log(Array.isArray(this.state.xzhou) );
+        // let xlist = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
         let legend = ["高风险", "中风险", "低风险"];
 
         datalist.push(new EcharBar('高风险', 'line', 'circle', 4, [120, 300, 402, 180, 590, 620, 200], '#35C9CB', 6));
@@ -158,96 +166,103 @@ class PrivateGo extends React.Component {
         let expand = this.state.expand || false;
         //刷新2次  解决echars 的宽度问题
         let first = this.state.first || false;
-        let ecahrs = !first ? "" : <BaseEcharView option={echarCom.option} legend={legend} xAxis={xlist} data={datalist}
+        let ecahrs = !first ? "" : <BaseEcharView option={echarCom.option} legend={legend} xAxis={this.getechartdata()} data={datalist}
                                                   style={{ height: '82%', width: '100%' }}/>;
-        return (
-            <div className="gutter-example button-demo " style={{ height: '100%', background:'#f1f1f1'}}>
-                <BreadcrumbCustom first="因私出国(境)" indexName="综合事务管理"/>
-                <Row gutter={10} className=" scrollable-container " style={{ height: '100%' ,background: '#f1f1f1' }}>
-                    <Col className="gutter-row" md={24}
-                         style={{ padding: '0px', backgroundColor: '#fff' }}>
-                        <div style={{ height: '100%',background: '#f1f1f1' }}>
-                            <div style={{ padding: '5px 10px', background: '#f1f1f1'  }}>
-                                <Layout style={{ background: '#f1f1f1'  }}>
-                                    <div className="y-center justify-content">
-                                        <div className="text-center" style={{ flex: "0.8" }}>
-                                            <div className="pull-left " style={{ fontSize: "14px" }}>
-                                                <Icon type="cloud" style={{ marginRight: "3px" }}/>
-                                                <span style={{ fontSize: "13px" }}>风险防控</span>
-                                            </div>
-
+        return <div className="gutter-example button-demo " style={{height: '100%', background: '#f1f1f1'}}>
+            <BreadcrumbCustom first="因私出国(境)" indexName="综合事务管理"/>
+            <Row gutter={10} className=" scrollable-container " style={{height: '100%'}}>
+                <Col className="gutter-row" md={24}
+                     style={{padding: '0px', backgroundColor: '#fff'}}>
+                    <div style={{height: '100%'}}>
+                        <div style={{padding: '5px 10px 0px'}}>
+                            <Layout style={{background: '#fff',padding: '5px 10px'}}>
+                                <div className="y-center justify-content">
+                                    <div className="text-center" style={{flex: "0.8"}}>
+                                        <div className="pull-left " style={{fontSize: "14px"}}>
+                                            <Icon type="cloud" style={{marginRight: "3px"}}/>
+                                            <span style={{fontSize: "13px"}}>风险防控</span>
                                         </div>
-                                        <Steps current={1} style={{ flex: "6" }}>
-                                            <Step status="process" title="本人申请"/>
-                                            <Step status="process" title="领导审批"/>
-                                            <Step status="process" title="领取证件"/>
-                                            <Step status="process" title="出国（境）活动"/>
-                                            <Step status="process" title="回国（入境）后交还证件"/>
-                                        </Steps>
 
-                                        <div className="pull-right" style={{ flex: "2" }}>
+                                    </div>
+                                    <Steps current={1} style={{flex: "6"}}>
+                                        <Step status="process" title="本人申请"/>
+                                        <Step status="process" title="领导审批"/>
+                                        <Step status="process" title="领取证件"/>
+                                        <Step status="process" title="出国（境）活动"/>
+                                        <Step status="process" title="回国（入境）后交还证件"/>
+                                    </Steps>
+
+                                    <div className="pull-right" style={{flex: "2"}}>
                                             <span className="pull-right ">高风险 {tableComs.getStar1(3, "star")}
                                                 中风险 {tableComs.getStar1(2, "star")} 低风险 {tableComs.getStar1(1, "star")}</span>
-                                        </div>
                                     </div>
-                                </Layout>
-                            </div>
-                            <div style={{ height: '400px',overflowX:'hidden',background: "#f1f1f1" }}>
+                                </div>
+                            </Layout>
+                        </div>
+                        <div style={{height: '350px', overflowX: 'hidden', padding: '0 10px'}}>
+                            <div style={{background: '#fff',height: '100%'}}>
                                 <ExtBaseicTable {...(tableComs.private_manger(expand))} />
                             </div>
                         </div>
-                    </Col>
+                    </div>
+                </Col>
 
-                    <Col className="gutter-row" md={24}
-                         style={{
-                             height: '44%',
-                             backgroundColor: "#f1f1f1",
-                             borderTop: "1px solid #E9E9E9"
-                         }}>
-                        <div className="" style={{ width: "30%", height: '100%', float: "left" }}>
-                            <div style={{ position: 'relative', height: '100%' }}>
-                                <div style={{
-                                    height: '14%',
-                                    width: '100%',
-                                    marginLeft: '5px',
-                                    position: 'relative'
-                                }}>
-                                    <div style={{ fontSize: "14px" }}>
-                                        <Icon type="area-chart" style={{ marginRight: "3px" }}/>
-                                        <span style={{ fontSize: "13px" }}>风险监控统计</span>
-                                    </div>
-
+                <Col className="gutter-row" md={24}
+                     style={{
+                         height: '50%',
+                         backgroundColor: "#fff ",
+                         padding: '0 10px',
+                         marginTop: '15px'
+                     }}>
+                    <div style={{background: '#fff',overflow: 'hidden',height: '100%'}}>
+                    <div className=""
+                         style={{width: "40%", height: '89%', float: "left", marginLeft: '5px', background: '#f1f1f1'}}>
+                        <div style={{position: 'relative', height: '100%', paddingLeft: "15px" , paddingTop: '15px', background: "#fff"}}>
+                            {/*<div style={{
+                                height: '14%',
+                                width: '100%',
+                                marginLeft: '5px',
+                                position: 'relative'
+                            }}>
+                                <div style={{fontSize: "14px", paddingTop: '14px'}}>
+                                    <Icon type="area-chart" style={{marginRight: "3px"}}/>
+                                    <span style={{fontSize: "13px"}}>风险监控统计</span>
                                 </div>
 
+                            </div>*/}
 
-                                {ecahrs}
 
-                            </div>
+                            {ecahrs}
+                            {/*<Echart gettabledata={this.state.gettabledata}/>*/}
                         </div>
-                        <div className="" style={{ width: "70%",  float: "left" }}>
-                            <Card bordered={false} noHovering={true} style={{ height: '100%' }}>
-                                <ExtBaseicTableList gettabledata={this.state.gettabledata}
-                                                    onDateChange={this.handleChange}
-                                    func1={this.funBack1}
-                                    func2={this.funBack2}/>
-                            </Card>
-                        </div>
-                    </Col>
+                    </div>
+                    <div className="" style={{width: "59%", float: "left"}}>
+                        <Card bordered={false} noHovering={true} style={{height: '100%'}}>
+                            <ExtBaseicTableList gettabledata={this.state.gettabledata}
+                                                onDateChange={this.handleChange}
+                                                func1={this.funBack1}
+                                                func2={this.funBack2}/>
+                        </Card>
+                    </div>
+                    </div>
+                </Col>
 
-                </Row>
-                <HumpgDialog
-                    title="人工评估"
-                    submitText="提交"
-                    visible={this.state.visibleUpdate}/>
+            </Row>
+            <HumpgDialog
+                title="人工评估"
+                submitText="提交"
+                visible={this.state.visibleUpdate}
+            />
 
-                <MoreDetDialog
-                    title="详情"
-                    visible={this.state.visibleMore}/>
-                {
-                    Bacecomstyle
-                }
-            </div>
-        )
+            <MoreDetDialog
+                title="详情"
+                visible={this.state.visibleMore}
+                gettabledata={this.state.gettabledata}
+            />
+            {
+                Bacecomstyle
+            }
+        </div>
     }
 }
 

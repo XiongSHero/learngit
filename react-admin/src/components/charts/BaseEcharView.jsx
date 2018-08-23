@@ -19,8 +19,19 @@ class BaseEcharView extends React.Component {
 
         const dataOption = Object.assign(option, {
             series: data,
+            title: {
+                text: '风险监控 ',
+                x: 'center',
+                y: '0px',
+                textStyle: {
+                    fontWeight: '700',
+                    fontSize: '13',
+                    color: '#777'
+                }
+            },
             legend: {
                 data: legend,
+                y: 'bottom'
             },
             xAxis: {
                 type: 'category',
@@ -47,13 +58,21 @@ class BaseEcharView extends React.Component {
                         fontSize: 10
                     }
                 }
+            },
+            yAxis: {
+                axisLabel: {
+                    textStyle: {
+                        fontSize: 12,
+                        color: '#609ee9'
+                    }
+                }
             }
         });
 
         return (
             <ReactEcharts
                 option={dataOption}
-                style={{ height: '280px', width: '100%' }}
+                style={{ height: '330px', width: '95%' }}
                 notMerge={true}
                 lazyUpdate={true}
                 className={'react_for_echarts'}

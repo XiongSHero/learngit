@@ -126,7 +126,7 @@ class Homepage extends React.Component {
                                         bodyStyle={{ padding: 20 }}
                                         bordered={false}
                                         noHovering={true}
-                                        className={`${this.state.animated || (this.state.animatedOne === i) ? 'animated' : ''} ${this.state.animated || (this.state.animatedOne === i) ? 'infinite' : ''} ${v.animateId}`}
+                                        className={`${this.state.animated || (this.state.animatedOne === i) ? 'animated' : ''} ${this.state.animated || (this.state.animatedOne === i) ? 'infinite' : ''} ${(this.state.animatedOne === i) ? v.animateId : ''}`}
                                         onMouseEnter={() => this.animatedOne(i)}
                                         onMouseLeave={() => this.animatedOneOver()}>
                                         <div className="custom-image">

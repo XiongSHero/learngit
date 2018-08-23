@@ -110,6 +110,29 @@ class PublicGo extends React.Component {
         })
     };
 
+    diffDate = (arr) => {
+        let i, obj = {}, result = [], len = arr.length;
+        for(i = 0; i < len; i++){
+            if(!obj[arr[i]]){
+                obj[arr[i]] = true;
+                result.push(arr[i]);
+            }
+        }
+        return result;
+
+    }
+    getechartdata = () => {
+        const echartdata = this.state.gettabledata;
+        let x, xzhou = [];
+        echartdata.forEach((item) => {
+            for(x in item) {
+                if (x === 'date') {
+                    xzhou.push(item[x])
+                }
+            }
+        });
+        return this.diffDate(xzhou);
+    }
     handleButton = () => {
         let state = this.state.expand || false;
         this.setState({
@@ -122,7 +145,7 @@ class PublicGo extends React.Component {
         let echarCom = new EcharCom();
 
         let datalist = [];
-        let xlist = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
+        // let xlist = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
         let legend = ["高风险", "中风险", "低风险"];
 
         datalist.push(new EcharBar('高风险', 'line', 'circle', 4, [120, 300, 402, 180, 590, 620, 200], '#35C9CB', 6));
@@ -132,10 +155,10 @@ class PublicGo extends React.Component {
         let expand = this.state.expand || false;
         //刷新2次  解决echars 的宽度问题
         let first = this.state.first || false;
-        let ecahrs = !first ? "" : <BaseEcharView option={echarCom.option} legend={legend} xAxis={xlist} data={datalist}
+        let ecahrs = !first ? "" : <BaseEcharView option={echarCom.option} legend={legend} xAxis={this.getechartdata()} data={datalist}
                                                   style={{ height: '82%', width: '100%' }}/>;
         return (
-            <div className="gutter-example button-demo " style={{ height: '100%' }}>
+            <div className="gutter-example button-demo " style={{ height: '100%', background: '#f1f1f1' }}>
                 <BreadcrumbCustom first="因公出国(境)" indexName="综合事务管理"/>
                 <Row gutter={10} className=" scrollable-container " style={{ height: '95%' }}>
                     <Col className="gutter-row" md={24}
@@ -165,21 +188,21 @@ class PublicGo extends React.Component {
                                     </div>
                                 </Layout>
                             </div>
-                            <div style={{ height: '320px',overflowX:'hidden' }}>
+                            <div style={{ height: '350px',overflowX:'hidden' }}>
                                 <ExtBaseicTable {...(tableComs.public_manger(expand))} />
                             </div>
                         </div>
                     </Col>
-
                     <Col className="gutter-row" md={24}
                          style={{
-                             height: '44%',
+                             height: '50%',
                              backgroundColor: "#fff",
-                             borderTop: "1px solid #E9E9E9"
+                             borderTop: "1px solid #E9E9E9",
+                             marginTop: '10px'
                          }}>
-                        <div className="" style={{ width: "30%", height: '100%', float: "left" }}>
-                            <div style={{ position: 'relative', height: '100%' }}>
-                                <div style={{
+                        <div className="" style={{ width: "40%", height: '100%', float: "left" }}>
+                            <div style={{ position: 'relative', height: '100%', paddingTop: '15px', paddingLeft: "15px"  }}>
+                                {/*<div style={{
                                     height: '14%',
                                     width: '100%',
                                     paddingLeft: '5px',
@@ -190,14 +213,14 @@ class PublicGo extends React.Component {
                                         <span style={{ fontSize: "13px" }}>风险监控统计</span>
                                     </div>
 
-                                </div>
+                                </div>*/}
 
 
                                 {ecahrs}
 
                             </div>
                         </div>
-                        <div className="" style={{ width: "70%",  float: "left" }}>
+                        <div className="" style={{ width: "60%",  float: "left" }}>
                             <Card bordered={false} noHovering={true} style={{ height: '100%' }}>
                                 <ExtBaseicTableList gettabledata={this.state.gettabledata}
                                                     onDateChange={this.handleChange}

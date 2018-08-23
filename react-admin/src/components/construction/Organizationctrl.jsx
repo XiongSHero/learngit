@@ -51,7 +51,7 @@ class Organizationctrl extends React.Component {
 
         const { fetchData } = this.props;
         //调用 http请求 获取网络数据
-        //fetchData({funcName: 'admin', stateName: 'auth'});
+        fetchData({funcName: 'tableData', stateName: 'auth'});
     }
 
     componentDidMount() {
@@ -65,7 +65,12 @@ class Organizationctrl extends React.Component {
 
     //获取网络数据 渲染UI
     componentWillReceiveProps(nextProps) {
-
+        const {auth: nextAuth = {}} = nextProps;
+        if(nextAuth.data && nextAuth.data.code === 0){
+            this.setState({
+                gettabledata: nextAuth.data.dataValue
+            })
+        }
     }
     funBack1 = () => {
         this.showMoreModal();
@@ -145,7 +150,7 @@ class Organizationctrl extends React.Component {
 
                     <Col className="gutter-row" md={24}
                          style={{
-                             height: '44%',
+                             height: '50%',
                              backgroundColor: "#fff",
                              borderTop: "1px solid #E9E9E9"
                          }}>

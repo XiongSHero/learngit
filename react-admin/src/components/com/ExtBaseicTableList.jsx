@@ -72,7 +72,7 @@ export class ExtBaseicTableList extends React.Component {
 
     renderStateContent = (value, row, index) => {
         return <div className=" flex-center">
-            <div style={{ cursor: 'pointer', }}>
+            <div style={{ cursor: 'pointer', textAlign: 'center' }}>
                 <Icon onClick={this.funBack1} type={"book"} style={{ margin: '3px', color: '#1ABC9C' }}/>
             </div>
         </div>;
@@ -95,17 +95,17 @@ export class ExtBaseicTableList extends React.Component {
             func2("22222");
         }
     };
-
+    // 获取父组件中的state，处理数据并渲染UI
     getDatas = () => {
         // console.log(this.props.gettabledata);
         const tabledata = this.props.gettabledata;
-        console.log((tabledata));
-
 
         tabledata.forEach( (item) => {
             for(let x in item){
                 if(x === 'risk'){
-                    item[x] = this.getStar(item[x], 'star');
+                    if(typeof item[x] === 'number'){
+                        item[x] = this.getStar(item[x], 'star');
+                    }
                 }
             }
         });
@@ -152,9 +152,10 @@ export class ExtBaseicTableList extends React.Component {
         return <span>{iconView}</span>;
     };
 
-    handOnChangeTime = () => {
-        const { onDataChange } = this.props;
-       this.props.onDateChange();
+    handOnChangeTime = (value, dateString) => {
+        // const { onDataChange } = this.props;
+       this.props.onDateChange(dateString);
+       console.log(dateString)
     };
 
 
@@ -164,9 +165,10 @@ export class ExtBaseicTableList extends React.Component {
         let startDate = this.state.startDate;
         let endDate = this.state.endDate;
 
+
         return (
             <div>
-                <div className='device_text' style={{ width: '100%', textAlign: 'center' }}>
+                <div className='device_text' style={{ width: '100%', textAlign: 'center', paddingTop: '3px', overflow: 'hidden'}}>
                     <RangePicker
                         style={{ float: 'right' }}
                         defaultValue={[moment(startDate, dateFormat), moment(endDate, dateFormat)]}
@@ -193,7 +195,7 @@ export class ExtBaseicTableList extends React.Component {
                               float: 'right'
                           }}>根据时间查询 : </span>
                 </div>
-                <div style={{ float: 'right', width: '100%' }}>
+                <div style={{ float: 'right', width: '100%', paddingTop: '16px'}}>
                     <ExtBaseicTable columns={this.data_columns}
                                     data={this.getDatas()}
                                     pagination={{ pageSize: 6 }}

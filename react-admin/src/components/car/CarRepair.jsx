@@ -32,6 +32,7 @@ class CarRepair extends React.Component {
         super(props);
         let d = new Date();
         this.state = {
+            gettabledata: [],
             echartsFlag: false,
             first: false,
             expand: false,
@@ -47,11 +48,11 @@ class CarRepair extends React.Component {
     componentWillMount() {
         const { receiveData } = this.props;
         receiveData(null, 'auth');
-        console.log("auth +++++" + JSON.stringify(this.props.auth));
+        // console.log("auth +++++" + JSON.stringify(this.props.auth));
 
         const { fetchData } = this.props;
         //调用 http请求 获取网络数据
-        //fetchData({funcName: 'admin', stateName: 'auth'});
+        fetchData({funcName: 'tableData', stateName: 'auth'});
     }
 
     componentDidMount() {
@@ -65,7 +66,13 @@ class CarRepair extends React.Component {
 
     //获取网络数据 渲染UI
     componentWillReceiveProps(nextProps) {
-
+        const {auth: nextAuth = {}} = nextProps;
+        if(nextAuth.data && nextAuth.data.code === 0){
+            console.log(nextAuth.data.dataValue);
+            this.setState({
+                gettabledata: nextAuth.data.dataValue
+            })
+        }
     }
     funBack1 = () => {
         this.showMoreModal();
@@ -114,7 +121,7 @@ class CarRepair extends React.Component {
         let ecahrs = !first ? "" : <BaseEcharView option={echarCom.option} legend={legend} xAxis={xlist} data={datalist}
                                                   style={{ height: '82%', width: '100%' }}/>;
         return (
-            <div className="gutter-example button-demo " style={{ height: '100%' }}>
+            <div className="gutter-example button-demo " style={{ height: '100%' ,background: "#f1f1f1"}}>
                 <BreadcrumbCustom first="公务用车管理" second="车辆加油" indexName="综合事务管理"/>
                 <Row gutter={10} className=" scrollable-container " style={{ height: '95%' }}>
                     <Col className="gutter-row" md={24}
@@ -152,13 +159,13 @@ class CarRepair extends React.Component {
 
                     <Col className="gutter-row" md={24}
                          style={{
-                             height: '44%',
+                             height: '53%',
                              backgroundColor: "#fff",
-                             borderTop: "1px solid #E9E9E9"
+                            marginTop: "10px"
                          }}>
-                        <div className="" style={{ width: "30%", height: '100%', float: "left" }}>
-                            <div style={{ position: 'relative', height: '100%' }}>
-                                <div style={{
+                        <div className="" style={{ width: "40%", height: '100%', float: "left" ,background: "#f1f1f1"}}>
+                            <div style={{ position: 'relative', height: '100%' , background: "#fff", paddingLeft: "10px" ,paddingTop: "15px"}}>
+                               {/* <div style={{
                                     height: '14%',
                                     width: '100%',
                                     paddingLeft: '5px',
@@ -170,16 +177,16 @@ class CarRepair extends React.Component {
                                     </div>
 
 
-                                </div>
+                                </div>*/}
 
 
                                 {ecahrs}
 
                             </div>
                         </div>
-                        <div className="" style={{ width: "70%",  float: "left" }}>
+                        <div className="" style={{ width: "60%",  float: "left" }}>
                             <Card bordered={false} noHovering={true} style={{ height: '100%' }}>
-                                <ExtBaseicTableList
+                                <ExtBaseicTableList gettabledata={this.state.gettabledata}
                                     func1={this.funBack1}
                                     func2={this.funBack2}/>
                             </Card>

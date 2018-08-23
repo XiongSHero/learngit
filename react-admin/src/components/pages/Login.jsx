@@ -14,7 +14,9 @@ const { Footer } = Layout;
 class Login extends React.Component {
 
     state = {
-        errorMesg: ""
+        errorMesg: "",
+        isRemember: true
+
     };
 
     componentWillMount() {
@@ -26,60 +28,76 @@ class Login extends React.Component {
         //     router.push('/pageIndex/homepage');
         // }
     }
+    componentDidMount() {
+        const  loginData = JSON.parse(localStorage.getItem("mm_loginStatus"));
+        if(this.state.isRemember && loginData){
+            console.log(loginData.userName);
 
+                this.props.form.setFieldsValue({
+                    'userName': loginData.userName,
+                    'password': loginData.userPassword,
+                    'remember': this.state.isRemember
+                });
+        } else {
+            this.props.form.setFieldsValue({'userName': ''});
+            this.props.form.setFieldsValue({'password': ''});
+            this.setState({
+                isRemember: !this.state.isRemember
+            });
+        }
+    }
     componentWillReceiveProps(nextProps) {
         const { auth: nextAuth = {} } = nextProps;
         const { router } = this.props;
 
         if (nextAuth.data && nextAuth.data.code === 0) {   // 判断是否登陆
-            localStorage.setItem('user', JSON.stringify(nextAuth.data));
+            console.log(this.state.isRemember)
 
+            localStorage.setItem('user', JSON.stringify(nextAuth.data));
             router.push('/pageIndex/homepage');
+
         } else if (nextAuth.data && nextAuth.data.message !== null) {
             this.setState({
                 errorMesg: nextAuth.data.data != null ? nextAuth.data.data : nextAuth.data.message
             });
         }
     }
-    //写cookies
-    /*setCookie(name, value) {
-        var Days = 30;
-        var exp = new Date();
-        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
-    }*/
-    //读取cookies
-    /*getCookie(name) {
-        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-        if (arr = document.cookie.match(reg)) return unescape(arr[2]);
-        else return null;
-    }*/
-    //删除cookies
-    /*delCookie(name) {
-        var exp = new Date();
-        exp.setTime(exp.getTime() - 1);
-        var cval = getCookie(name);
-        if (cval != null) document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
-    }*/
 
+    handleRemeber = (e) => {
+        this.setState({
+            isRemember: e.target.checked
+        });
+        console.log(this.state.isRemember)
+    }
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.props.form.getFieldValue("password"));
+        console.log(this.props.form.getFieldValue("userName"));
         this.props.form.validateFields((err, values) => {
-            if (!err) {
-                const { fetchData } = this.props;
-                if (values.userName !== '' && values.password !== '') {
-                    console.log(values);
-                    fetchData({
-                        funcName: 'loginWyzk',
-                        params: {
-                            username: values.userName,
-                            password: values.password
-                        },
-                        stateName: 'auth'
-                    });
+            if (err) {
+                return;
+            }
+            const {fetchData} = this.props;
+            if (values.userName !== '' && values.password !== '') {
+                console.log(values);
+                fetchData({
+                    funcName: 'loginWyzk',
+                    params: {
+                        username: values.userName,
+                        password: values.password
+                    },
+                    stateName: 'auth'
+                });
 
-                }
+            if (this.state.isRemember) {
+                let loginData = {};
+                loginData.userName = this.props.form.getFieldValue("userName");
+                loginData.userPassword = this.props.form.getFieldValue("password");
+                loginData.isRemember = this.state.isRemember;
+                console.log(loginData)
+                localStorage.setItem("mm_loginStatus", JSON.stringify(loginData));
+            } else {
+                localStorage.removeItem("mm_loginStatus")
+            }
             }
         });
     };
@@ -128,9 +146,9 @@ class Login extends React.Component {
                                 <FormItem>
                                     {getFieldDecorator('remember', {
                                         valuePropName: 'checked',
-                                        initialValue: true,
+                                        initialValue: this.state.isRemember,
                                     })(
-                                        <Checkbox>记住我</Checkbox>
+                                        <Checkbox onClick={this.handleRemeber}>记住我</Checkbox>
                                     )}
                                     {/*<a className="login-form-forgot" href="" style={{float: 'right'}}>忘记密码</a>*/}
                                     <Button type="primary" htmlType="submit" className="login-form-button"
@@ -141,7 +159,7 @@ class Login extends React.Component {
                             </Form>
                         </div>
                     </div>
-                    <Footer style={{ height: 80, textAlign: 'center', color: '#6a8aee', background: "transparent" }}>
+                    <Footer style={{ height: 80, textAlign: 'center', color: '#fff', background: "transparent" }}>
                         V1.0.0 ©2017 Created by wyzk
                     </Footer>
                 </div>
