@@ -10,6 +10,7 @@ import BasicTable from '../components/tables/BasicTables';
 import AdvancedTable from '../components/tables/AdvancedTables';
 import AsynchronousTable from '../components/tables/AsynchronousTable';
 import Login from '../components/pages/Login';
+import Register from '../components/pages/Register';
 import Echarts from '../components/charts/Echarts';
 import Recharts from '../components/charts/Recharts';
 import Icons from '../components/ui/Icons';
@@ -274,6 +275,7 @@ export default class CRouter extends Component {
                     </Route>
 
                     <Route path={'login'} components={Login}/>
+                    <Route path={'register'} components={Register}/>
                     <Route path={'404'} component={NotFound}/>
                 </Route>
             </Router>

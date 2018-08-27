@@ -200,7 +200,9 @@ class Progressctrl extends React.Component {
 
                 <MoreDetDialog
                     title="详情"
-                    visible={this.state.visibleMore}/>
+                    visible={this.state.visibleMore}
+                    gettabledata={this.state.gettabledata}
+                />
                 {
                     Bacecomstyle
                 }

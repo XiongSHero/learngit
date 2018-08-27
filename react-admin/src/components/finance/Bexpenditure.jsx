@@ -200,11 +200,14 @@ class Bexpenditure extends React.Component {
                 <HumpgDialog
                     title="人工评估"
                     submitText="提交"
-                    visible={this.state.visibleUpdate}/>
+                    visible={this.state.visibleUpdate}
+                />
 
                 <MoreDetDialog
                     title="详情"
-                    visible={this.state.visibleMore}/>
+                    visible={this.state.visibleMore}
+                    gettabledata={this.state.gettabledata}
+                />
                 {
                     Bacecomstyle
                 }

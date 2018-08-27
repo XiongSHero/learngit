@@ -52,6 +52,29 @@ export const loginWyzk = (params = {}) => {
         console.log(err)
     });
 };
+//  注册模块(get)
+export const registerWyzk = (params = {}) => {
+    let username = params.username;
+    let url ='https://www.easy-mock.com/mock/5b74ea085ec4891242bc658a/table/userName';
+    return axios({
+        method: 'get',
+        url: url
+    }).then(res => res.data).catch(err => {
+        console.log(err)
+    });
+};
+// 注册模块（post）
+export const registerZcpt = (params = {}) => {
+    let url = 'https://www.easy-mock.com/mock/5b74ea085ec4891242bc658a/table/username&&password';
+    return axios({
+        method: 'post',
+        url: url,
+        data: params
+    }).then(res => res.data).catch(err => {
+        console.log(err)
+    })
+}
+
 // 表格模块
 export const tableData = (params = {}) => {
     let dataValue = params.dataValue;

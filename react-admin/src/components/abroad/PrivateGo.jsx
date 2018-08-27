@@ -38,7 +38,6 @@ class PrivateGo extends React.Component {
         this.state = {
             gettabledata:[],
             xzhou: [],
-            gettableflag:true,
             echartsFlag: false,
             first: false,
             expand: false,
@@ -85,6 +84,7 @@ class PrivateGo extends React.Component {
 
     funBack1 = () => {
         this.showMoreModal();
+
     };
     funBack2 = () => {
         this.showUpdateModal();
@@ -129,8 +129,8 @@ class PrivateGo extends React.Component {
             }
         }
         return result;
+    };
 
-    }
     getechartdata = () => {
         const echartdata = this.state.gettabledata;
         let x, xzhou = [];
@@ -142,7 +142,8 @@ class PrivateGo extends React.Component {
             }
         });
         return this.diffDate(xzhou);
-    }
+    };
+
     handleButton = () => {
         let state = this.state.expand || false;
         this.setState({

@@ -2,7 +2,7 @@
  * Created by hao.cheng on 2017/4/16.
  */
 import React from 'react';
-import {Form, Icon, Input, Button, Checkbox, Alert} from 'antd';
+import {Form, Icon, Input, Button, Alert} from 'antd';
 import {Layout} from 'antd';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -11,11 +11,11 @@ import {fetchData, receiveData} from '@/action';
 const FormItem = Form.Item;
 const { Footer } = Layout;
 
-class Login extends React.Component {
+class Register extends React.Component {
 
     state = {
         errorMesg: "",
-        isRemember: true
+        confirmDirty: false
 
     };
 
@@ -29,51 +29,33 @@ class Login extends React.Component {
         // }
     }
     componentDidMount() {
-        const  loginData = JSON.parse(localStorage.getItem("mm_loginStatus"));
-        if(this.state.isRemember && loginData){
-            console.log(loginData.userName);
 
-                this.props.form.setFieldsValue({
-                    'userName': loginData.userName,
-                    'password': loginData.userPassword,
-                    'remember': this.state.isRemember
-                });
-        } else {
-            this.props.form.setFieldsValue({'userName': ''});
-            this.props.form.setFieldsValue({'password': ''});
-            this.setState({
-                isRemember: !this.state.isRemember
-            });
-        }
     }
     componentWillReceiveProps(nextProps) {
         const { auth: nextAuth = {} } = nextProps;
         const { router } = this.props;
-        console.log(nextAuth)
-        if (nextAuth.data && nextAuth.data.code === 0) {   // 判断是否登陆
+        console.log(nextAuth.data)
+        //  模拟后台数据，如果用户名重复，则显示错误
+        if(nextAuth.data && nextAuth.data.data.code === '104'){
+            console.log(1)
+            this.setState({
+                errorMesg: nextAuth.data.data.data != null ? nextAuth.data.data.data : nextAuth.data.data.message
+            })
+        }
+        // 注册成功，登陆至主页面
+       /* if (nextAuth.data && nextAuth.data.data.code === 101 && this.state.confirmDirty) {   // 判断是否登陆
+            console.log(nextAuth.data,this.state.confirmDirty);
 
-
-            localStorage.setItem('user', JSON.stringify(nextAuth.data));
+            // localStorage.setItem('user', JSON.stringify(nextAuth.data));
             router.push('/pageIndex/homepage');
 
         } else if (nextAuth.data && nextAuth.data.message !== null) {
             this.setState({
                 errorMesg: nextAuth.data.data != null ? nextAuth.data.data : nextAuth.data.message
             });
-        }
+        }*/
     }
 
-    toRegister = (e) => {
-        e.preventDefault();
-        const { router } = this.props;
-        router.push('/register');
-    }
-    handleRemeber = (e) => {
-        this.setState({
-            isRemember: e.target.checked
-        });
-        console.log(this.state.isRemember)
-    }
     handleSubmit = (e) => {
         e.preventDefault();
         console.log(this.props.form.getFieldValue("userName"));
@@ -85,27 +67,57 @@ class Login extends React.Component {
             if (values.userName !== '' && values.password !== '') {
                 console.log(values);
                 fetchData({
-                    funcName: 'loginWyzk',
+                    funcName: 'registerZcpt',
                     params: {
                         username: values.userName,
                         password: values.password
                     },
                     stateName: 'auth'
                 });
-
-            if (this.state.isRemember) {
-                let loginData = {};
-                loginData.userName = this.props.form.getFieldValue("userName");
-                loginData.userPassword = this.props.form.getFieldValue("password");
-                loginData.isRemember = this.state.isRemember;
-                console.log(loginData)
-                localStorage.setItem("mm_loginStatus", JSON.stringify(loginData));
-            } else {
-                localStorage.removeItem("mm_loginStatus")
-                }
             }
         });
     };
+    //  用户名校验
+    handleUsernameBlur = () => {
+        this.props.form.validateFields(['userName'],(err, values) => {
+            if (err) {
+                return;
+            }
+            const {fetchData} = this.props;
+            if (values.userName !== '') {
+                console.log(values);
+                fetchData({
+                    funcName: 'registerWyzk',
+                  /*  params: {
+                        username: values.userName
+                    },*/
+                    stateName: 'auth'
+                });
+            }
+        });
+    }
+    //  密码校验
+    compareToFirstPassword = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value && value !== form.getFieldValue('password')) {
+            callback('2次密码不一致！');
+        } else {
+            callback();
+        }
+    }
+
+    validateToNextPassword = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value && this.state.confirmDirty) {
+            form.validateFields(['confirm'], { force: true });
+        }
+        callback();
+    }
+    handleConfirmBlur = (e) => {
+        const value = e.target.value;
+        this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+    }
+
     gitHub = () => {
         window.location.href = 'https://github.com/login/oauth/authorize?client_id=792cdcd244e98dcd2dee&redirect_uri=http://localhost:3006/&scope=user&state=reactAdmin';
     };
@@ -122,45 +134,59 @@ class Login extends React.Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         let errView = this.getErrView();
+        const formItemLayout = {
+            labelCol: {
+                xs: { span: 4   },
+                sm: { span: 6 },
+            },
+            wrapperCol: {
+                xs: { span: 24 },
+                sm: { span: 16 },
+            }
+        };
         return (
             <Layout className="login_layout">
                 <div className="wrap">
                     <div className="login">
-                        <div className="login-form" style={{height: '320px'}}>
+                        <div className="login-form" style={{height: '360px'}}>
                             <div className="login-logo">
                                 <span style={{fontWeight:"bold"}}>廉政风险管理系统</span>
                             </div>
                             {errView}
                             <Form onSubmit={this.handleSubmit} style={{ maxWidth: '400px' }}>
-                                <FormItem>
+                                <FormItem {...formItemLayout } label="用户名">
                                     {getFieldDecorator('userName', {
                                         rules: [{ required: true, message: '请输入用户名!' }],
                                     })(
                                         <Input prefix={<Icon type="user" style={{ fontSize: 13 }}/>}
-                                               placeholder="请输入用户名"/>
+                                               placeholder="请输入用户名" onBlur={this.handleUsernameBlur}/>
                                     )}
                                 </FormItem>
-                                <FormItem>
+                                <FormItem {...formItemLayout } label="设置密码">
                                     {getFieldDecorator('password', {
-                                        rules: [{ required: true, message: '请输入密码!' }],
+                                        rules: [{ required: true, message: '请输入密码!' },
+                                            {validator: this.validateToNextPassword}],
                                     })(
                                         <Input prefix={<Icon type="lock" style={{ fontSize: 13 }}/>} type="password"
                                                placeholder="请输入密码"/>
                                     )}
                                 </FormItem>
-                                <FormItem>
-                                    {getFieldDecorator('remember', {
-                                        valuePropName: 'checked',
-                                        initialValue: this.state.isRemember,
+                                <FormItem {...formItemLayout } label="确认密码">
+                                    {getFieldDecorator('comfirm', {
+                                        rules: [{ required: true, message: '请输入密码!' },
+                                            {validator: this.compareToFirstPassword}],
                                     })(
-                                        <Checkbox onClick={this.handleRemeber}>记住我</Checkbox>
+                                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }}/>} type="password"
+                                               placeholder="请再次输入密码" onBlur={this.handleConfirmBlur}/>
                                     )}
+                                </FormItem>
+                                <FormItem>
                                     {/*<a className="login-form-forgot" href="" style={{float: 'right'}}>忘记密码</a>*/}
                                     <Button type="primary" htmlType="submit" className="login-form-button"
                                             style={{ width: '100%' }}>
-                                        登录
+                                        注册
                                     </Button>
-                                    <a className="login-form-forgot" onClick={this.toRegister} href="#" style={{float: 'right', fontWeight: 'bold', fontSize: '13px', color: "rgba(0,0,0,0.65)"}}>注册</a>
+                                    <a className="login-form-forgot" href="#" style={{float: 'right'}}>已有帐号？直接登录</a>
                                 </FormItem>
                             </Form>
                         </div>
@@ -185,4 +211,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default connect(mapStateToPorps, mapDispatchToProps)(Form.create()(Login));
+export default connect(mapStateToPorps, mapDispatchToProps)(Form.create()(Register));

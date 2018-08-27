@@ -3,17 +3,17 @@
  */
 import React from 'react';
 import {Card, Col, Layout, Row} from 'antd';
-import index1 from '../../style/imgs/index/1-1-up.png';
-import index2 from '../../style/imgs/index/1-2-up.png';
-import index3 from '../../style/imgs/index/1-3-up.png';
-import index4 from '../../style/imgs/index/1-4-up.png';
-import index5 from '../../style/imgs/index/2-1-up.png';
-import index6 from '../../style/imgs/index/2-2-up.png';
-import index7 from '../../style/imgs/index/2-3-up.png';
-import index8 from '../../style/imgs/index/2-4-up.png';
-import index9 from '../../style/imgs/index/3-1-up.png';
-import index10 from '../../style/imgs/index/3-2-up.png';
-import index11 from '../../style/imgs/index/3-3-up.png';
+import index1 from '../../style/imgs/index1/1-1-up.png';
+import index2 from '../../style/imgs/index1/1-2-up.png';
+import index3 from '../../style/imgs/index1/1-3-up.png';
+import index4 from '../../style/imgs/index1/1-4-up.png';
+import index5 from '../../style/imgs/index1/2-1-up.png';
+import index6 from '../../style/imgs/index1/2-2-up.png';
+import index7 from '../../style/imgs/index1/2-3-up.png';
+import index8 from '../../style/imgs/index1/2-4-up.png';
+import index9 from '../../style/imgs/index1/3-1-up.png';
+import index10 from '../../style/imgs/index1/3-2-up.png';
+import index11 from '../../style/imgs/index1/3-3-up.png';
 
 class Homepage extends React.Component {
 

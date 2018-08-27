@@ -31,21 +31,24 @@ class MoreDetDialog extends React.Component {
        //  })
     }
 
-   /* getDetail = () => {
+    getDetail = () => {
         const detail =this.props.gettabledata;
         let x,desDetail = [];
          detail.forEach((item, i) => {
             for(x in item) {
-                if(x === 'key' && item[x] !== i){
+              /*  if(x === 'key' && item[x] !== i){
                     return;
                 }
                 if(x === 'description'){
                     desDetail = item[x];
-                }
+                }*/
+              if(item['key'] === 0){
+                  desDetail = item['description'];
+              }
             }
          })
         return desDetail;
-    }*/
+    }
     handleCancel = () => {
         this.setState({ visible: false });
     };
@@ -104,12 +107,12 @@ class MoreDetDialog extends React.Component {
     };
     getTimeLine3 = () => {
         let tableComs = new TableComs();
-        // const descrs = this.getDetail();
+        const descrs = this.getDetail();
 
-        const descrs =[{
+        /*const descrs =[{
             date: '2018-8-16',
-            event: '申请公车去机场接xxx来我院观察，批准人：李四',
             person: '刘德华'
+            event: '申请公车去机场接xxx来我院观察，批准人：李四',
         },
             {
                 date: '2018-8-17',
@@ -129,30 +132,37 @@ class MoreDetDialog extends React.Component {
                 reason: '因病请假，代理批复',
                 person: '评估系统'
             }
-        ];
-        const descripe = descrs.slice(1);
-        const itemList = descripe.map((descr, index) =>
-            <Timeline.Item color="green" key={index}>
-                <div>
-                    <Card title={descr.date} bordered={true}>
-                        <p style={{ paddingLeft: '10px'}}>评估结果：{descr.resultRisk ? tableComs.getStar(descr.resultRisk, 'star') : '无风险'}</p>
-                        <p style={{ paddingLeft: '10px'}}>原因：{descr.reason}</p>
-                        <p style={{ float: 'right'}}>操作人：{descr.person}</p>
-                    </Card>
-                </div>
-            </Timeline.Item>
+        ];*/
+        // const descripe = descrs.slice(1);
+        const itemList = descrs.map((descr, index) => {
+            if(index === 0){
+                return (
+                    <Timeline.Item color="red" key={index}>
+                        <div>
+                            <Card title={descr.date} bordered={true}>
+                                <p style={{ paddingLeft: '10px' }}>{descr.event}</p>
+                                <p style={{ float: 'right' }}>责任人 : {descr.person}</p>
+                            </Card>
+                        </div>
+                    </Timeline.Item>
+                )
+            } else {
+                return (
+                    <Timeline.Item color="green" key={index}>
+                        <div>
+                            <Card title={descr.date} bordered={true}>
+                                <p style={{paddingLeft: '10px'}}>评估结果：{descr.resultRisk ? tableComs.getStar(descr.resultRisk, 'star') : '无风险'}</p>
+                                <p style={{paddingLeft: '10px'}}>原因：{descr.reason}</p>
+                                <p style={{float: 'right'}}>操作人：{descr.person}</p>
+                            </Card>
+                        </div>
+                    </Timeline.Item>)
+                }
+            }
+
         );
-        const first = descrs.splice(0,1);
         return (
             <Timeline>
-                <Timeline.Item color="red">
-                    <div>
-                        <Card title={first[0].date} bordered={true}>
-                            <p style={{ paddingLeft: '10px' }}>{first[0].event}</p>
-                            <p style={{ float: 'right' }}>责任人 : {first[0].person}</p>
-                        </Card>
-                    </div>
-                </Timeline.Item>
                 {itemList}
             </Timeline>
         )

@@ -38,7 +38,7 @@ export class ExtBaseicTableList extends React.Component {
             title: '详情',
             dataIndex: 'description',
             width: 100,
-            render: () => this.renderStateContent(),
+            render: (text, record, index) => this.renderStateContent(text, record, index),
         }, {
             title: '操作',
             dataIndex: 'link',
@@ -71,6 +71,7 @@ export class ExtBaseicTableList extends React.Component {
     };
 
     renderStateContent = (value, row, index) => {
+        console.log( row['description'])
         return <div className=" flex-center">
             <div style={{ cursor: 'pointer', textAlign: 'center' }}>
                 <Icon onClick={this.funBack1} type={"book"} style={{ margin: '3px', color: '#1ABC9C' }}/>
