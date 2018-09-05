@@ -68,7 +68,7 @@ class HumpgDialog extends React.Component {
     };
 
     render() {
-        const { title, submitText } = this.props;
+        const { title, submitText,manHandle } = this.props;
         const { getFieldDecorator } = this.props.form;
         let visible = this.state.visible;
         let addLoading = this.state.addLoading;
@@ -92,7 +92,7 @@ class HumpgDialog extends React.Component {
                             {...formItemLayout}
                             label="事件"
                         >
-                            <span className="ant-form-text">刘德华申请公车机场接XXX来我院视察工作，批准人:李四</span>
+                            <span className="ant-form-text">{manHandle}</span>
                         </FormItem>
                         <FormItem
                             {...formItemLayout}

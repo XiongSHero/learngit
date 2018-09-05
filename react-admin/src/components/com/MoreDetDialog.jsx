@@ -32,22 +32,23 @@ class MoreDetDialog extends React.Component {
     }
 
     getDetail = () => {
-        const detail =this.props.gettabledata;
+       /* const detail =this.props.gettabledata;
         let x,desDetail = [];
          detail.forEach((item, i) => {
             for(x in item) {
-              /*  if(x === 'key' && item[x] !== i){
+              /!*  if(x === 'key' && item[x] !== i){
                     return;
                 }
                 if(x === 'description'){
                     desDetail = item[x];
-                }*/
+                }*!/
               if(item['key'] === 0){
                   desDetail = item['description'];
               }
             }
          })
-        return desDetail;
+        return desDetail;*/
+       return this.props.descrData;
     }
     handleCancel = () => {
         this.setState({ visible: false });

@@ -7,7 +7,7 @@ import {Icon} from 'antd';
 export const getStepString = (steps = []) => {
     let stepView = [];
     steps.map((step, index) => {
-        let subView = <div className="ant-steps-item ant-steps-status-process"
+        let subView = <div className="ant-steps-item ant-steps-status-process" key={index}
                            style={{ width: '20%', marginRight: '-14px' }}>
             <div className="ant-steps-tail" style={{ paddingRight: '14px' }}><i></i></div>
             <div className="ant-steps-step">

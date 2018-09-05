@@ -13,7 +13,7 @@ export class ExtBaseicTableList extends React.Component {
             data:[],
             devicelist: [],
             pagination: {},
-            loading: false,
+            // loading: true,
             startDate: this.getDay(-3),
             endDate: this.getDay(0),
         };
@@ -43,7 +43,7 @@ export class ExtBaseicTableList extends React.Component {
             title: '操作',
             dataIndex: 'link',
             width: 150,
-            render: () => this.renderOperationContent(),
+            render: (text, record, index) => this.renderOperationContent(text, record, index),
         }];
     }
 
@@ -71,30 +71,35 @@ export class ExtBaseicTableList extends React.Component {
     };
 
     renderStateContent = (value, row, index) => {
-        console.log( row['description'])
+        // console.log( row['description'])
+        let rowData = row['description'];
         return <div className=" flex-center">
             <div style={{ cursor: 'pointer', textAlign: 'center' }}>
-                <Icon onClick={this.funBack1} type={"book"} style={{ margin: '3px', color: '#1ABC9C' }}/>
+                <Icon onClick={() => this.funBack1(rowData)} type={"book"} style={{ margin: '3px', color: '#1ABC9C' }}/>
             </div>
         </div>;
     };
     renderOperationContent = (value, row, index) => {
+        // console.log(value)
         return <div className=" flex-center">
-            <a style={{ marginRight: '4px' }} onClick={this.funBack2}>人工评估</a>
+            <a style={{ marginRight: '4px' }} onClick={() => this.funBack2(value)}>人工评估</a>
         </div>;
     };
 
-    funBack1 = (stringId) => {
-        const { func1 } = this.props;
+    funBack1 = (row) => {
+       /* const { func1 } = this.props;
         if (typeof func1 === "function") {
             func1("111111");
-        }
+        }*/
+       this.props.func1(row);
+        // console.log( row)
     };
-    funBack2 = (stringId) => {
-        const { func2 } = this.props;
+    funBack2 = (value) => {
+        /*const { func2 } = this.props;
         if (typeof func2 === "function") {
             func2("22222");
-        }
+        }*/
+        this.props.func2(value);
     };
     // 获取父组件中的state，处理数据并渲染UI
     getDatas = () => {
@@ -159,10 +164,17 @@ export class ExtBaseicTableList extends React.Component {
        console.log(dateString)
     };
 
+    // 禁止选择今天以后的时间
+     disabledDate = (current) => {
+        // Can not select days before today and today
+        return current && current > moment().endOf('day');
+    }
 
+    isLoading = () => {
+         return this.props.loading;
+    }
     render() {
         const dateFormat = 'YYYY-MM-DD';
-
         let startDate = this.state.startDate;
         let endDate = this.state.endDate;
 
@@ -175,6 +187,7 @@ export class ExtBaseicTableList extends React.Component {
                         defaultValue={[moment(startDate, dateFormat), moment(endDate, dateFormat)]}
                         format={dateFormat}
                         onChange={this.handOnChangeTime}
+                        disabledDate={(current) => this.disabledDate(current)}
                         dateRender={(current) => {
                             const style = {};
                             if (current.date() === 1) {
@@ -202,6 +215,7 @@ export class ExtBaseicTableList extends React.Component {
                                     pagination={{ pageSize: 6 }}
                                     scroll={{ y: 210 }}
                                     bordered={true}
+                                    loading={this.isLoading()}
                                     size="small"
                                     style={{ margin: "5px", height: '100%' }}/>
                 </div>

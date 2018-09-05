@@ -11,7 +11,7 @@ import EcharCom from "../com/EcharCom";
 import EcharBar from "../com/EcharBar";
 import Bacecomstyle from "../Bacecomstyle";
 import TableComs from "../com/TableComs";
-import {Card, Col, Icon, Layout, Row, Select, Steps} from 'antd';
+import {Card, Col, Icon, Layout, Row, Select, Steps, Spin} from 'antd';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -20,7 +20,6 @@ import BreadcrumbCustom from '../BreadcrumbCustom';
 import BaseEcharView from '../charts/BaseEcharView';
 
 import {fetchData, receiveData} from '@/action';
-import {tableData} from '@/axios';
 import axios from 'axios';
 
 import ExtBaseicTable from '../tables/ExtBaseicTable';
@@ -37,7 +36,10 @@ class PrivateGo extends React.Component {
         let d = new Date();
         this.state = {
             gettabledata:[],
-            xzhou: [],
+            echartData: [],
+            descrData: [],
+            manHandle: '',
+            loading: false,
             echartsFlag: false,
             first: false,
             expand: false,
@@ -60,6 +62,9 @@ class PrivateGo extends React.Component {
         fetchData({
             funcName: 'tableData',
             stateName: 'auth'});
+        this.setState({
+            loading: true
+        })
     }
 
     componentDidMount() {
@@ -76,18 +81,28 @@ class PrivateGo extends React.Component {
         const {auth: nextAuth = {}} = nextProps;
         if(nextAuth.data && nextAuth.data.code === 0){
                 this.setState({
-                gettabledata: nextAuth.data.dataValue
+                gettabledata: nextAuth.data.dataValue,
+                echartData: nextAuth.data.echarData,
+                loading: false
             })
         }
     }
 
 
-    funBack1 = () => {
+    funBack1 = (row) => {
         this.showMoreModal();
+        this.setState({
+            descrData: row
+        })
+        // console.log(row)
 
     };
-    funBack2 = () => {
+    funBack2 = (value) => {
         this.showUpdateModal();
+        this.setState({
+            manHandle: value
+        })
+        // console.log(value)
     };
 
     showUpdateModal = () => {
@@ -104,15 +119,20 @@ class PrivateGo extends React.Component {
     handleChange = (v) => {
         //  url参数（2个输入框中的值）
         console.log(v);
+        this.setState({
+            loading: true
+        })
         const url = 'https://www.easy-mock.com/mock/5b74ea085ec4891242bc658a/table/timetable';
         axios({
             method: 'get',
             url: url
         }).then(res => {
-            console.log(Array.isArray(res.data.dataValue))
+            // console.log(Array.isArray(res.data.dataValue))
             if(res.data.code === 1){
                 this.setState((preState) => ({
-                    gettabledata: res.data.dataValue
+                    gettabledata: res.data.dataValue,
+                    echartData: res.data.echarData,
+                    loading: false
                 }))
             }
         }).catch(err => {
@@ -120,30 +140,28 @@ class PrivateGo extends React.Component {
         })
     };
 
-    diffDate = (arr) => {
-        let i, obj = {}, result = [], len = arr.length;
-        for(i = 0; i < len; i++){
-            if(!obj[arr[i]]){
-                obj[arr[i]] = true;
-                result.push(arr[i]);
-            }
-        }
-        return result;
-    };
-
-    getechartdata = () => {
-        const echartdata = this.state.gettabledata;
-        let x, xzhou = [];
+    // 单独发送echart的数据并处理
+    getEchartData = () => {
+        const echartdata = this.state.echartData;
+        let x, arrDate = [], arrHigh = [], arrMiddle = [], arrLow = [];
         echartdata.forEach((item) => {
             for(x in item) {
-                if (x === 'date') {
-                    xzhou.push(item[x])
-                }
+               if(x === 'date'){
+                   arrDate.push(item[x]);
+               }
+               else if(x === 'high') {
+                   arrHigh.push(item[x]);
+               }
+               else if(x === 'middle'){
+                   arrMiddle.push(item[x]);
+               }
+               else if(x === 'low') {
+                   arrLow.push(item[x]);
+               }
             }
-        });
-        return this.diffDate(xzhou);
-    };
-
+        })
+        return {arrDate, arrHigh, arrMiddle, arrLow}
+    }
     handleButton = () => {
         let state = this.state.expand || false;
         this.setState({
@@ -156,18 +174,20 @@ class PrivateGo extends React.Component {
         let echarCom = new EcharCom();
 
         let datalist = [];
-        // console.log(Array.isArray(this.state.xzhou) );
+        let xlist = this.getEchartData().arrDate;
+        let legend = ["高风险",     "中风险", "低风险"];
+        datalist.push(new EcharBar('高风险', 'line', 'circle', 4, this.getEchartData().arrHigh, '#35C9CB', 6));
+        datalist.push(new EcharBar('中风险', 'line', 'circle', 4, this.getEchartData().arrMiddle, '#B9A6DF', 6));
+        datalist.push(new EcharBar('低风险', 'line', 'circle', 4, this.getEchartData().arrLow, '#5EB3EF', 6));
+
         // let xlist = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
-        let legend = ["高风险", "中风险", "低风险"];
-
-        datalist.push(new EcharBar('高风险', 'line', 'circle', 4, [120, 300, 402, 180, 590, 620, 200], '#35C9CB', 6));
+        /* datalist.push(new EcharBar('高风险', 'line', 'circle', 4, [120, 300, 402, 180, 590, 620, 200], '#35C9CB', 6));
         datalist.push(new EcharBar('中风险', 'line', 'circle', 4, [220, 100, 302, 280, 590, 220, 420], '#B9A6DF', 6));
-        datalist.push(new EcharBar('低风险', 'line', 'circle', 4, [320, 400, 102, 80, 290, 320, 120], '#5EB3EF', 6));
-
+        datalist.push(new EcharBar('低风险', 'line', 'circle', 4, [320, 400, 102, 80, 290, 320, 120], '#5EB3EF', 6));*/
         let expand = this.state.expand || false;
         //刷新2次  解决echars 的宽度问题
         let first = this.state.first || false;
-        let ecahrs = !first ? "" : <BaseEcharView option={echarCom.option} legend={legend} xAxis={this.getechartdata()} data={datalist}
+        let ecahrs = !first ? "" : <BaseEcharView option={echarCom.option} legend={legend} xAxis={xlist} data={datalist}
                                                   style={{ height: '82%', width: '100%' }}/>;
         return <div className="gutter-example button-demo " style={{height: '100%', background: '#f1f1f1'}}>
             <BreadcrumbCustom first="因私出国(境)" indexName="综合事务管理"/>
@@ -232,17 +252,19 @@ class PrivateGo extends React.Component {
 
                             </div>*/}
 
-
+                            <Spin spinning={this.state.loading}>
                             {ecahrs}
+                            </Spin>
                             {/*<Echart gettabledata={this.state.gettabledata}/>*/}
                         </div>
                     </div>
                     <div className="" style={{width: "59%", float: "left"}}>
                         <Card bordered={false} noHovering={true} style={{height: '100%'}}>
                             <ExtBaseicTableList gettabledata={this.state.gettabledata}
+                                                loading={this.state.loading}
                                                 onDateChange={this.handleChange}
-                                                func1={this.funBack1}
-                                                func2={this.funBack2}/>
+                                                func1={(row) => this.funBack1(row)}
+                                                func2={(value) => this.funBack2(value)}/>
                         </Card>
                     </div>
                     </div>
@@ -253,12 +275,14 @@ class PrivateGo extends React.Component {
                 title="人工评估"
                 submitText="提交"
                 visible={this.state.visibleUpdate}
+                manHandle={this.state.manHandle}
             />
 
             <MoreDetDialog
                 title="详情"
                 visible={this.state.visibleMore}
-                gettabledata={this.state.gettabledata}
+                // gettabledata={this.state.gettabledata}
+                descrData={this.state.descrData}
             />
             {
                 Bacecomstyle
